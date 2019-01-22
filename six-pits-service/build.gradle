@@ -29,8 +29,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// https://mvnrepository.com/artifact/com.h2database/h2
-	testImplementation group: 'com.h2database', name: 'h2', version: '1.4.197'
+	implementation group: 'com.h2database', name: 'h2', version: '1.4.197'
 	// https://mvnrepository.com/artifact/org.flywaydb/flyway-core
-	testImplementation group: 'org.flywaydb', name: 'flyway-core', version: '5.2.4'
+	implementation group: 'org.flywaydb', name: 'flyway-core', version: '5.2.4'
 
 }
