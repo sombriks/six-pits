@@ -1,0 +1,8 @@
+*.class
+.gradle
+gradlew
+gradle.bat
+.DS_Store
+bin
+build
+node_modules
