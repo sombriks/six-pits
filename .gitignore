@@ -6,3 +6,4 @@ gradle.bat
 bin
 build
 node_modules
+.nyc_output

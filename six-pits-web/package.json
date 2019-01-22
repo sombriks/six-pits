@@ -4,20 +4,44 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "cross-env NODE_ENV=development budo src/main.js:build.js -o -l -H 127.0.0.1",
+    "test": "cross-env NODE_ENV=testing nyc mocha --timeout=20000 --exit"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "game",
+    "web",
+    "client"
+  ],
+  "author": "Leonardo Silveira <sombriks@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "babelify": "^10.0.0",
     "browserify": "^16.2.3",
     "browserify-css": "^0.14.0",
     "budo": "^11.6.0",
+    "chai": "^4.2.0",
     "cross-env": "^5.2.0",
     "envify": "^4.1.0",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
     "tinyify": "^2.5.0",
     "vueify": "^9.4.1"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "vue": "^2.5.22",
+    "vue-router": "^3.0.2",
+    "vuetify": "^1.4.3",
+    "vuex": "^3.1.0"
+  },
+  "browserify": {
+    "transform": [
+      "envify",
+      "babelify",
+      "browserify-css",
+      "vueify"
+    ]
   }
 }
