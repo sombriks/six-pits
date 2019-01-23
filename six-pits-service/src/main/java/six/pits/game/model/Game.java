@@ -5,10 +5,15 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name="game")
 public class Game {
@@ -21,20 +26,16 @@ public class Game {
   @Temporal(TemporalType.TIMESTAMP)
   private Date gameCreation;
 
-  public Integer getGameId() {
-    return gameId;
-  }
+  @OneToOne
+  @JoinColumn(name="game_status_id")
+  private GameStatus status;
 
-  public void setGameId(Integer gameId) {
-    this.gameId = gameId;
-  }
-
-  public Date getGameCreation() {
-    return gameCreation;
-  }
-
-  public void setGameCreation(Date gameCreation) {
-    this.gameCreation = gameCreation;
-  }
-
+  @OneToOne
+  @JoinColumn(name="player_id_1")
+  private Player player1;
+  
+  @OneToOne
+  @JoinColumn(name="player_id_2")
+  private Player player2;
+  
 }
