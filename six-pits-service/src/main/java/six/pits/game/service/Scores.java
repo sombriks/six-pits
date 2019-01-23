@@ -14,8 +14,16 @@ public class Scores extends BaseService<Score, Integer> {
   }
 
   public List<Score> listByPlayerId(int playerId, int page, int pageSize) {
-    return em.createQuery("select s from Score s where s.playerId = :playerId", Score.class)//
+    return em.createQuery("select s from Score s where s.player.playerId = :playerId", Score.class)//
         .setParameter("playerId", playerId)//
+        .setFirstResult((page - 1) * pageSize)//
+        .setMaxResults(pageSize)//
+        .getResultList();
+  }
+
+  public List<Score> listByGameId(int gameId, int page, int pageSize) {
+    return em.createQuery("select s from Score s where s.game.gameId = :gameId", Score.class)//
+        .setParameter("gameId", gameId)//
         .setFirstResult((page - 1) * pageSize)//
         .setMaxResults(pageSize)//
         .getResultList();
