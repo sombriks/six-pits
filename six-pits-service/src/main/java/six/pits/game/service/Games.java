@@ -2,32 +2,27 @@ package six.pits.game.service;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-
 import org.springframework.stereotype.Service;
 
 import six.pits.game.model.Game;
 
 @Service
-public class Games {
+public class Games extends BaseService<Game, Integer> {
 
-  @PersistenceContext
-  private EntityManager em;
-
-  public List<Game> listGames(int page, int pageSize) {
-    return listGames(null, page, pageSize);
+  public Games(){
+    super(Game.class);
   }
 
-  public List<Game> listGames(String name, int page, int pageSize) {
-    TypedQuery<Game> q = null;
-    if (name != null) {
-      q = em.createQuery(
-          "select g from Game g where g.player1.playerName like :name or g.player2.playerName like :name", Game.class);
-      q.setParameter("name", "%" + name + "%");
-    } else
-      q = em.createQuery("select g from Game g", Game.class);
-    return q.setFirstResult((page - 1) * pageSize).setMaxResults(pageSize).getResultList();
+  public List<Game> listGamesByPlayerName(String name, int page, int pageSize) {
+
+    String q = "select g from Game g where g.player1.playerName like :name or g.player2.playerName like :name";
+
+    return em.createQuery(q, Game.class)//
+        .setParameter("name", "%" + name + "%")//
+        .setFirstResult((page - 1) * pageSize)//
+        .setMaxResults(pageSize)//
+        .getResultList();
+
   }
+
 }
