@@ -49,11 +49,10 @@ const actions = {
     const ret = await api.get("/player/list");
     commit("setPlayers", ret.data);
   },
-  async goOnline({ commit, state }) {
+  goOnline({ commit, state }) {
     let player = state.player;
     player.status.playerStatusId = 2;
-    player = await api.put("/player/save", player).data;
-    commit("setPlayer", player);
+    return api.put("/player/save", player);
   }
 };
 
