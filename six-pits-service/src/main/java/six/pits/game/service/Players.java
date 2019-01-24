@@ -13,9 +13,16 @@ public class Players extends BaseService<Player, Integer> {
     super(Player.class);
   }
 
-  public List<Player> listPlayersByName(String name, int page, int pageSize) {
+  public List<Player> listByName(String name, int page, int pageSize) {
     return em.createQuery("select p from Player p where p.playerName like :name", Player.class)//
         .setParameter("name", "%" + name + "%")//
+        .setFirstResult((page - 1) * pageSize)//
+        .setMaxResults(pageSize)//
+        .getResultList();
+  }
+
+  public List<Player> listNonOffline(int page, int pageSize) {
+    return em.createQuery("select p from Player p where p.status.playerStatusId != 1", Player.class)//
         .setFirstResult((page - 1) * pageSize)//
         .setMaxResults(pageSize)//
         .getResultList();

@@ -1,3 +1,4 @@
+// this build.gradle was initially built by spring initializr https://start.spring.io/
 buildscript {
 	ext {
 		springBootVersion = '2.1.2.RELEASE'
@@ -10,6 +11,7 @@ buildscript {
 	}
 }
 
+// we adopt lombok to avoid the get/set boilerplate
 plugins {
   id "io.franzbecker.gradle-lombok" version "1.14"
 }
@@ -27,6 +29,18 @@ repositories {
 	mavenCentral()
 }
 
+// There is no point on cover main methor or model classes, so we instruct jacoco to ignore it
+jacocoTestReport {
+	afterEvaluate {
+		classDirectories = files(classDirectories.files.collect {
+			fileTree(dir: it, exclude:  [
+				'six/pits/game/model/*',
+				'six/pits/game/GameApplication*',
+			])
+		})
+	}
+}
+test.finalizedBy(project.tasks.jacocoTestReport)
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -37,7 +51,5 @@ dependencies {
 	implementation group: 'com.h2database', name: 'h2', version: '1.4.197'
 	// https://mvnrepository.com/artifact/org.flywaydb/flyway-core
 	implementation group: 'org.flywaydb', name: 'flyway-core', version: '5.2.4'
-	// https://mvnrepository.com/artifact/org.projectlombok/lombok
-	implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.4'
 
 }

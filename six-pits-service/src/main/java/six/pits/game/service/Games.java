@@ -13,7 +13,7 @@ public class Games extends BaseService<Game, Integer> {
     super(Game.class);
   }
 
-  public List<Game> listGamesByPlayerName(String name, int page, int pageSize) {
+  public List<Game> listByPlayerName(String name, int page, int pageSize) {
 
     String q = "select g from Game g where g.player1.playerName like :name or g.player2.playerName like :name";
 

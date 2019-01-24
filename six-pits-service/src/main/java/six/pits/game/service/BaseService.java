@@ -26,7 +26,8 @@ public abstract class BaseService<T, I extends Serializable> {
     query.select(root);
     return em.createQuery(query)//
         .setFirstResult((page - 1) * pageSize)//
-        .setMaxResults(pageSize).getResultList();
+        .setMaxResults(pageSize)//
+        .getResultList();
   }
 
   public T find(I id) {
