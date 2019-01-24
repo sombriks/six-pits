@@ -9,6 +9,10 @@ console.log(`This is six pits version [${version}]`);
 
 Vue.use(Vuetify);
 
+Vue.component("six-pits-alert", require("./components/SixPitsAlert.vue"));
+Vue.component("six-pits-confirm", require("./components/SixPitsConfirm.vue"));
+Vue.component("six-pits-prompt", require("./components/SixPitsPrompt.vue"));
+
 new Vue({
   store,
   router,

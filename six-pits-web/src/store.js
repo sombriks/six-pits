@@ -16,12 +16,22 @@ const api = axios.create({
 });
 
 const state = {
-  player: null
+  player: null,
+  players: []
 };
+
+// remember login
+state.player = localStorage.getItem("six-pits-player");
+if (state.player) state.player = JSON.parse(state.player);
 
 const mutations = {
   setPlayer(state, player) {
     state.player = player;
+    if (player) localStorage.setItem("six-pits-player", JSON.stringify(player));
+    else localStorage.removeItem("six-pits-player");
+  },
+  setPlayers(state, players) {
+    state.players = players;
   }
 };
 
@@ -32,6 +42,19 @@ const actions = {
   doRegister({ commit, state }, login) {
     return api.post("/player/register", login);
   },
+  async doLogout({ commit, state }) {
+    commit("setPlayer", null);
+  },
+  async listPlayers({ commit, state }) {
+    const ret = await api.get("/player/list");
+    commit("setPlayers", ret.data);
+  },
+  async goOnline({ commit, state }) {
+    let player = state.player;
+    player.status.playerStatusId = 2;
+    player = await api.put("/player/save", player).data;
+    commit("setPlayer", player);
+  }
 };
 
 export const store = new Vuex.Store({ state, mutations, actions });
