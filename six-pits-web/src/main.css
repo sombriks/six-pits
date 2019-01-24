@@ -1,4 +1,8 @@
-body{
-  background-color:black;
-  color:wheat;
+/* css entry point */
+
+@import "../node_modules/vuetify/dist/vuetify.min.css";
+
+body {
+  background-color: black;
+  color: wheat;
 }

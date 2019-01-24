@@ -8,3 +8,7 @@ and build steps.
 
 The service project is written in modern java and relies on [gradle](https://gradle.org/) to manage dependencies and
 build.
+
+This solution was mainly developed on mac os using [visual studio code](https://code.visualstudio.com/), with latest
+[node.js LTS version](https://nodejs.org), [gradle 5.0](https://gradle.org/) and
+[java SDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
