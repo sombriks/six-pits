@@ -14,14 +14,19 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "player")
 public class Player {
+
+  public Player() {
+  }
+
+  public Player(int playerId) {
+    this.playerId = playerId;
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +40,6 @@ public class Player {
   @Column(name = "player_name")
   private String playerName;
 
-  @JsonIgnore
   @Column(name = "player_hash")
   private String playerHash;
 
@@ -50,4 +54,5 @@ public class Player {
     if (status == null)
       status = new PlayerStatus(1);
   }
+
 }

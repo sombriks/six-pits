@@ -35,6 +35,7 @@ jacocoTestReport {
 		classDirectories = files(classDirectories.files.collect {
 			fileTree(dir: it, exclude:  [
 				'six/pits/game/model/*',
+				'six/pits/game/web/LoginTO*',
 				'six/pits/game/GameApplication*',
 			])
 		})

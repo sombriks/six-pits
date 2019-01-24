@@ -34,7 +34,8 @@ public abstract class BaseResource<T, I extends Serializable> {
 
   @PostMapping("save")
   public T insert(@RequestBody T payload) {
-    System.out.println(payload);    return service.insert(payload);
+    System.out.println(payload);
+    return service.insert(payload);
   }
 
   @PutMapping("save")
@@ -43,8 +44,9 @@ public abstract class BaseResource<T, I extends Serializable> {
   }
 
   @DeleteMapping("{id}")
-  public T del(@PathVariable(name = "id", required = true) I id) {
-    return service.find(id);
+  public String del(@PathVariable(name = "id", required = true) I id) {
+    service.del(id);
+    return "OK";
   }
 
 }

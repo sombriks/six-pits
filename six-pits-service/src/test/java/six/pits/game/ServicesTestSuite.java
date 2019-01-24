@@ -4,14 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -45,13 +41,13 @@ public class ServicesTestSuite {
 
 	@Test
 	public void shouldListGames() {
-		int len = games.list(1, 100).size();
+		int len = games.list(1, 7).size();
 		assertEquals(7, len);
 	}
 
 	@Test
 	public void shouldListAliceGames() {
-		int len = games.listByPlayerName("Alice", 1, 100).size();
+		int len = games.listByPlayerName("Alice", 1, 2).size();
 		assertEquals(2, len);
 	}
 
@@ -83,8 +79,8 @@ public class ServicesTestSuite {
 
 	@Test
 	public void shouldListScores() {
-		int len = scores.list(1, 100).size();
-		assertEquals(17, len);
+		int len = scores.list(1, 10).size();
+		assertEquals(10, len);
 	}
 
 	@Test
