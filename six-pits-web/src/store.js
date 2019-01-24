@@ -28,7 +28,10 @@ const mutations = {
 const actions = {
   doLogin({ commit, state }, login) {
     return api.post("/player/login", login);
-  }
+  },
+  doRegister({ commit, state }, login) {
+    return api.post("/player/register", login);
+  },
 };
 
 export const store = new Vuex.Store({ state, mutations, actions });

@@ -12,7 +12,7 @@ create table player (
 create table game (
   game_id integer not null primary key auto_increment,
   game_creation timestamp default CURRENT_TIMESTAMP(),
-  game_status_id integer default 1,
+  game_status_id integer not null default 1,
   player_id_1 integer not null,
   player_id_2 integer not null,
   foreign key (game_status_id) references game_status(game_status_id),

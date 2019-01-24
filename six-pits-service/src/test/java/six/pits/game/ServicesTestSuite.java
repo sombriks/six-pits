@@ -11,10 +11,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import six.pits.game.model.Game;
+import six.pits.game.model.GameStatus;
 import six.pits.game.model.HighScore;
 import six.pits.game.model.Player;
 import six.pits.game.service.Games;
@@ -25,7 +27,7 @@ import six.pits.game.service.Scores;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
-public class GameApplicationTests {
+public class ServicesTestSuite {
 
 	@Autowired
 	private Games games;
@@ -72,6 +74,14 @@ public class GameApplicationTests {
 	}
 
 	@Test
+	public void shouldLoginWithAlice() throws Exception {
+
+		String hash = Util.md5("123456");
+		Player p = players.login("Alice", hash);
+		assertNotNull(p);
+	}
+
+	@Test
 	public void shouldListScores() {
 		int len = scores.list(1, 100).size();
 		assertEquals(17, len);
@@ -92,12 +102,12 @@ public class GameApplicationTests {
 	}
 
 	@Test
-	public void shouldSaveNewPlayer() throws NoSuchAlgorithmException {
-		MessageDigest md = MessageDigest.getInstance("MD5");
+	public void shouldSaveNewPlayer() throws Exception {
 
 		Player p = new Player();
 		p.setPlayerName("Max");
-		p.setPlayerHash(new String(md.digest("123456".getBytes())));
+		String hash = Util.md5("123456");
+		p.setPlayerHash(hash);
 
 		players.insert(p);
 
@@ -116,6 +126,7 @@ public class GameApplicationTests {
 	@Test
 	public void shouldDeleteJoeAndMaryGame() {
 		Game g = new Game();
+		g.setStatus(new GameStatus(1));
 		Player p1 = new Player();
 		p1.setPlayerId(1);// Joe
 		g.setPlayer1(p1);

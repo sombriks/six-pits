@@ -18,8 +18,17 @@
           </v-card-text>
           <v-card-actions>
             <v-container grid-list-xl>
-              <v-layout justify-end>
-                <v-btn type="submit" color="primary">Login</v-btn>
+              <v-layout row>
+                <v-flex xs6>
+                  <v-layout justify-start>
+                    <router-link to="/register" tag="v-btn">Register</router-link>
+                  </v-layout>
+                </v-flex>
+                <v-flex xs6>
+                  <v-layout justify-end>
+                    <v-btn type="submit" color="primary">Login</v-btn>
+                  </v-layout>
+                </v-flex>
               </v-layout>
             </v-container>
           </v-card-actions>

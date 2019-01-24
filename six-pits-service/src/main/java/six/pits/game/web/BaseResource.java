@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import six.pits.game.service.BaseService;
@@ -32,12 +33,12 @@ public abstract class BaseResource<T, I extends Serializable> {
   }
 
   @PostMapping("save")
-  public T insert(T payload) {
-    return service.insert(payload);
+  public T insert(@RequestBody T payload) {
+    System.out.println(payload);    return service.insert(payload);
   }
 
   @PutMapping("save")
-  public T update(T payload) {
+  public T update(@RequestBody T payload) {
     return service.update(payload);
   }
 

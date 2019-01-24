@@ -11,15 +11,22 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="player_status")
+@Table(name = "player_status")
 public class PlayerStatus {
+
+  public PlayerStatus(int playerStatusId) {
+    this.playerStatusId = playerStatusId;
+  }
+
+  public PlayerStatus() {
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name="player_status_id")
+  @Column(name = "player_status_id")
   private Integer playerStatusId;
 
-  @Column(name="player_status_description")
+  @Column(name = "player_status_description")
   private String playerStatusDescription;
 
 }

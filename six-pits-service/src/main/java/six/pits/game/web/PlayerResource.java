@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,8 +38,13 @@ public class PlayerResource extends BaseResource<Player, Integer> {
   }
 
   @PostMapping("login")
-  public Player login(LoginTO payload) {
+  public Player login(@RequestBody LoginTO payload) {
     return players.login(payload.getPlayerName(), payload.getPlayerHash());
+  }
+
+  @PostMapping("register")
+  public Player register(@RequestBody LoginTO payload) {
+    return players.insert(payload.toPlayer());
   }
 
 }

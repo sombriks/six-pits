@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,26 +20,34 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="player")
+@Table(name = "player")
 public class Player {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name="player_id")
+  @Column(name = "player_id")
   private Integer playerId;
 
-  @Column(name="player_creation")
+  @Column(name = "player_creation")
   @Temporal(TemporalType.TIMESTAMP)
   private Date playerCreation;
 
-  @Column(name="player_name")
+  @Column(name = "player_name")
   private String playerName;
 
   @JsonIgnore
-  @Column(name="player_hash")
+  @Column(name = "player_hash")
   private String playerHash;
 
   @OneToOne
-  @JoinColumn(name="player_status_id")
+  @JoinColumn(name = "player_status_id")
   private PlayerStatus status;
+
+  @PrePersist
+  public void preInsert() {
+    if (playerCreation == null)
+      playerCreation = new Date();
+    if (status == null)
+      status = new PlayerStatus(1);
+  }
 }
