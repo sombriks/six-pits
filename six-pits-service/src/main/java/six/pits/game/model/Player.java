@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Data
@@ -32,6 +34,7 @@ public class Player {
   @Column(name="player_name")
   private String playerName;
 
+  @JsonIgnore
   @Column(name="player_hash")
   private String playerHash;
 

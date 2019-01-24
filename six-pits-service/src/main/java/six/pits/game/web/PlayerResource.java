@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +34,11 @@ public class PlayerResource extends BaseResource<Player, Integer> {
   public List<Player> nonOffline(@RequestParam(defaultValue = "1") Integer page,
       @RequestParam(defaultValue = "10") Integer pageSize) {
     return players.listNonOffline(page, pageSize);
+  }
+
+  @PostMapping("login")
+  public Player login(LoginTO payload) {
+    return players.login(payload.getPlayerName(), payload.getPlayerHash());
   }
 
 }

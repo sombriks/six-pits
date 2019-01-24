@@ -28,4 +28,14 @@ public class Players extends BaseService<Player, Integer> {
         .getResultList();
   }
 
+  public Player login(String playerName, String playerHash) {
+
+    String q = "select p from Player p where p.playerName = :playerName and p.playerHash = :playerHash";
+
+    return em.createQuery(q, Player.class)//
+        .setParameter("playerName", playerName)//
+        .setParameter("playerHash", playerHash)//
+        .getSingleResult();
+  }
+
 }

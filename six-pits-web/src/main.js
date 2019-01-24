@@ -1,13 +1,13 @@
 import "./main.css";
 import { version } from "../package.json";
-console.log(`This is six pits version [${version}]`);
-
 import Vue from "vue";
 import Vuetify from "vuetify";
-Vue.use(Vuetify);
-
 import { router } from "./router";
 import { store } from "./store";
+
+console.log(`This is six pits version [${version}]`);
+
+Vue.use(Vuetify);
 
 new Vue({
   store,

@@ -1,7 +1,13 @@
 <template>
   <v-app>
-    <v-navigation-drawer app></v-navigation-drawer>
-    <v-toolbar app color="primary"></v-toolbar>
+    <v-navigation-drawer app v-model="show">
+      <v-layout column>
+        
+      </v-layout>
+    </v-navigation-drawer>
+    <v-toolbar app color="primary">
+      <v-btn @click="show = !show">Menu</v-btn>
+    </v-toolbar>
     <v-content>
       <v-container fluid>
         <router-view></router-view>
@@ -14,6 +20,7 @@
 </template>
 <script>
 export default {
-  name: "app"
+  name: "app",
+  data: _ => ({ show: false })
 };
 </script>
