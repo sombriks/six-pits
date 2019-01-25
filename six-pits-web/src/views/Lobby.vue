@@ -3,16 +3,23 @@
     <div class="display-1">Players</div>
     <v-container grid-list-xl>
       <v-layout row wrap>
-        <v-flex xs6 sm4 md3 lg2 v-for="p in $store.state.players" :key="p.playerId">
-          <six-pits-player :player="p"/>
+        <v-flex xs6 sm4 md3 v-for="p in $store.state.players" :key="p.playerId">
+          <v-card>
+            <v-card-text>
+              <six-pits-player :player="p"/>
+            </v-card-text>
+            <v-card-actions v-if="!isMyself && isOnline">
+              <v-btn flat @click="makeChallenge(p)">challenge</v-btn>
+            </v-card-actions>
+          </v-card>
         </v-flex>
       </v-layout>
     </v-container>
-    <div class="display-1">Challenges</div>
-     <v-container grid-list-xl>
+    <div class="display-1">Games</div>
+    <v-container grid-list-xl>
       <v-layout row wrap>
-        <v-flex xs6 sm4 md3 lg2 v-for="g in $store.state.myGames" :key="g.gameId">
-          <!-- <six-pits-player :player="p"/> -->
+        <v-flex xs6 sm4 md3 v-for="g in $store.state.games" :key="g.gameId">
+          <six-pits-game :game="g"/>
         </v-flex>
       </v-layout>
     </v-container>
@@ -26,6 +33,17 @@ export default {
     await this.$store.dispatch("goOnline");
     await this.$store.dispatch("listPlayers");
     await this.$store.dispatch("listGames");
+  },
+  methods: {
+    makeChallenge(player) {
+      const game = { player1: {}, player2: {} };
+      game.player1.playerId = this.$store.state.player.playerId;
+      game.player2.playerId = player.playerId;
+      this.$store.dispatch("newGame", game).then(ret => {
+        alert("challenge created!");
+        this.$store.dispatch("listGames");
+      });
+    }
   }
 };
 </script>

@@ -15,6 +15,7 @@ Vue.component("six-pits-confirm", require("./components/SixPitsConfirm.vue"));
 Vue.component("six-pits-prompt", require("./components/SixPitsPrompt.vue"));
 
 Vue.component("six-pits-player", require("./components/SixPitsPlayer.vue"));
+Vue.component("six-pits-game", require("./components/SixPitsGame.vue"));
 
 new Vue({
   store,
