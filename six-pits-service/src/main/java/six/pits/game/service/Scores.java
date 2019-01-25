@@ -28,4 +28,16 @@ public class Scores extends BaseService<Score, Integer> {
         .setMaxResults(pageSize)//
         .getResultList();
   }
+
+  public List<Score> listByPlayerIdAndGameId(int playerId, int gameId, int page, int pageSize) {
+
+    String q = "select s from Score s where s.player.playerId = :playerId and s.game.gameId = :gameId";
+
+    return em.createQuery(q, Score.class)//
+        .setParameter("playerId", playerId)//
+        .setParameter("gameId", gameId)//
+        .setFirstResult((page - 1) * pageSize)//
+        .setMaxResults(pageSize)//
+        .getResultList();
+  }
 }

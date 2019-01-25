@@ -89,6 +89,9 @@ const actions = {
   getGame(_, gameId) {
     return api.get(`/game/${gameId}`);
   },
+  getScores(_, {playerId, gameId}) {
+    return api.get(`/score/by-player-and-game/${playerId}/${gameId}`);
+  },
 };
 
 export const store = new Vuex.Store({state, mutations, actions});

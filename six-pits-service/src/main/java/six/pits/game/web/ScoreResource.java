@@ -34,4 +34,11 @@ public class ScoreResource extends BaseResource<Score, Integer> {
       @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer pageSize) {
     return scores.listByGameId(id, page, pageSize);
   }
+
+  @GetMapping("by-player-and-game/{playerId}/{gameId}")
+  public List<Score> byPlayerAndGame(@PathVariable(name = "playerId", required = true) Integer playerId,
+      @PathVariable(name = "gameId", required = true) Integer gameId, @RequestParam(defaultValue = "1") Integer page,
+      @RequestParam(defaultValue = "10") Integer pageSize) {
+    return scores.listByPlayerIdAndGameId(playerId, gameId, page, pageSize);
+  }
 }
