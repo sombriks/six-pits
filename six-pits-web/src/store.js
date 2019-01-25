@@ -86,6 +86,9 @@ const actions = {
     game.status.gameStatusId = 2;
     return api.put("/game/save", game);
   },
+  getGame(_, gameId) {
+    return api.get(`/game/${gameId}`);
+  },
 };
 
 export const store = new Vuex.Store({state, mutations, actions});

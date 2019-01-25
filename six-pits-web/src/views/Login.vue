@@ -2,7 +2,7 @@
   <v-container grid-list-xl>
     <v-layout column>
       <v-layout justify-center align-center v-if="$store.state.player">
-        <v-btn @click="$router.push('/lobby')">Continue as <b>{{$store.state.player.playerName}}</b></v-btn>
+        <v-btn @click="$router.push('/lobby')">Continue as&nbsp;<b>[{{$store.state.player.playerName}}]</b></v-btn>
       </v-layout>
       <form @submit.prevent="doLogin" v-if="!$store.state.player">
         <v-card>

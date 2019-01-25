@@ -50,6 +50,40 @@ public class Game {
   @JoinColumn(name = "player_id_2")
   private Player player2;
 
+  @Column(name = "game_turn")
+  private Integer gameTurn;
+
+  @Column(name = "game_pit1_player1")
+  private Integer gamePit1Player1;
+  @Column(name = "game_pit2_player1")
+  private Integer gamePit2Player1;
+  @Column(name = "game_pit3_player1")
+  private Integer gamePit3Player1;
+  @Column(name = "game_pit4_player1")
+  private Integer gamePit4Player1;
+  @Column(name = "game_pit5_player1")
+  private Integer gamePit5Player1;
+  @Column(name = "game_pit6_player1")
+  private Integer gamePit6Player1;
+
+  @Column(name = "game_pit1_player2")
+  private Integer gamePit1Player2;
+  @Column(name = "game_pit2_player2")
+  private Integer gamePit2Player2;
+  @Column(name = "game_pit3_player2")
+  private Integer gamePit3Player2;
+  @Column(name = "game_pit4_player2")
+  private Integer gamePit4Player2;
+  @Column(name = "game_pit5_player2")
+  private Integer gamePit5Player2;
+  @Column(name = "game_pit6_player2")
+  private Integer gamePit6Player2;
+
+  @Column(name = "game_big_pit_player1")
+  private Integer gameBigPitPlayer1;
+  @Column(name = "game_big_pit_player2")
+  private Integer gameBigPitPlayer2;
+  
   @PrePersist
   public void preInsert() {
     if (gameCreation == null)

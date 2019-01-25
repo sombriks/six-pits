@@ -9,7 +9,7 @@ export const routes = [
   { path: "/register", component: require("./views/Register.vue") },
   { path: "/lobby", component: require("./views/Lobby.vue") },
   { path: "/score-table", component: require("./views/ScoreTable.vue") },
-  { path: "/game", component: require("./views/Game.vue") }
+  { path: "/game/:gameId", component: require("./views/Game.vue") }
 ];
 
 export const router = new VueRouter({ routes });

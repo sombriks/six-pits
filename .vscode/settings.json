@@ -3,7 +3,6 @@
   "files.autoSave": "onFocusChange",
   "editor.tabSize": 2,
   "prettier.printWidth": 120,
-  "editor.rulers": [
-    120
-  ]
+  "editor.wordWrapColumn": 120,
+  "editor.rulers": [120]
 }

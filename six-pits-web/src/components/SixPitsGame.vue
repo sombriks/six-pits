@@ -67,11 +67,9 @@ export default {
       confirm("Proceed?", async ok => {
         if (ok) {
           await this.$store.dispatch("acceptGame", this.game);
-          await this.$store.dispatch("listPlayers");
-          await this.$store.dispatch("listGames");
+          this.$router.push(`/game/${this.game.gameId}`);
         }
       });
-
     },
     refuseGame() {
       confirm("Are you sure?", async ok => {
@@ -82,7 +80,9 @@ export default {
         }
       });
     },
-    continueGame() {}
+    continueGame() {
+      this.$router.push(`/game/${this.game.gameId}`);
+    }
   }
 };
 </script>
