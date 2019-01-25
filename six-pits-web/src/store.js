@@ -40,35 +40,51 @@ const mutations = {
 };
 
 const actions = {
-  doLogin({commit, state}, login) {
-    return api.post("/player/login", login);
-  },
-  doRegister({commit, state}, login) {
-    return api.post("/player/register", login);
-  },
-  async doLogout({commit, state}) {
-    commit("setPlayer", null);
-  },
-  async listPlayers({commit, state}) {
+  async listPlayers({commit}) {
     const ret = await api.get("/player/list");
     commit("setPlayers", ret.data);
   },
-  async listGames({commit, state}) {
-    const ret = await api.get("/game/list");
-    commit("setGames", ret.data);
+  doLogin(_, login) {
+    return api.post("/player/login", login);
   },
-  newGame({commit, state}, game) {
-    return api.post("/game/save", game);
+  doRegister(_, login) {
+    return api.post("/player/register", login);
   },
-  goOnline({commit, state}) {
+  async doLogout({commit}) {
+    commit("setPlayer", null);
+  },
+  goOnline({state}) {
     let player = state.player;
     player.status.playerStatusId = 2;
     return api.put("/player/save", player);
   },
-  goOffline({commit, state}) {
+  goOffline({state}) {
     let player = state.player;
     player.status.playerStatusId = 1;
     return api.put("/player/save", player);
+  },
+  goGaming({state}) {
+    let player = state.player;
+    player.status.playerStatusId = 3;
+    return api.put("/player/save", player);
+  },
+  async listGames({commit}) {
+    const ret = await api.get("/game/list");
+    commit("setGames", ret.data);
+  },
+  newGame(_, game) {
+    return api.post("/game/save", game);
+  },
+  refuseGame({state}, game) {
+    // player 1 aborted
+    if (game.player1.playerId == state.player.playerId) game.status.gameStatusId = 5;
+    // player 2 aborted
+    else if (game.player2.playerId == state.player.playerId) game.status.gameStatusId = 6;
+    return api.put("/game/save", game);
+  },
+  acceptGame(_, game) {
+    game.status.gameStatusId = 2;
+    return api.put("/game/save", game);
   },
 };
 
