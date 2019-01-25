@@ -7,17 +7,18 @@ Vue.use(Vuex);
 const env = process.env.NODE_ENV || "development";
 
 const baseURL = {
-  development: "http://127.0.0.1:8080"
+  development: "http://127.0.0.1:8080",
   // production:"-TBD-"
 };
 
 const api = axios.create({
-  baseURL: baseURL[env]
+  baseURL: baseURL[env],
 });
 
 const state = {
   player: null,
-  players: []
+  players: [],
+  games: [],
 };
 
 // remember login
@@ -32,28 +33,43 @@ const mutations = {
   },
   setPlayers(state, players) {
     state.players = players;
-  }
+  },
+  setGames(state, games) {
+    state.games = games;
+  },
 };
 
 const actions = {
-  doLogin({ commit, state }, login) {
+  doLogin({commit, state}, login) {
     return api.post("/player/login", login);
   },
-  doRegister({ commit, state }, login) {
+  doRegister({commit, state}, login) {
     return api.post("/player/register", login);
   },
-  async doLogout({ commit, state }) {
+  async doLogout({commit, state}) {
     commit("setPlayer", null);
   },
-  async listPlayers({ commit, state }) {
+  async listPlayers({commit, state}) {
     const ret = await api.get("/player/list");
     commit("setPlayers", ret.data);
   },
-  goOnline({ commit, state }) {
+  async listGames({commit, state}) {
+    const ret = await api.get("/game/list");
+    commit("setGames", ret.data);
+  },
+  newGame({commit, state}, game) {
+    return api.post("/game/save", game);
+  },
+  goOnline({commit, state}) {
     let player = state.player;
     player.status.playerStatusId = 2;
     return api.put("/player/save", player);
-  }
+  },
+  goOffline({commit, state}) {
+    let player = state.player;
+    player.status.playerStatusId = 1;
+    return api.put("/player/save", player);
+  },
 };
 
-export const store = new Vuex.Store({ state, mutations, actions });
+export const store = new Vuex.Store({state, mutations, actions});

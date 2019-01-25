@@ -12,4 +12,9 @@ build.
 This solution was mainly developed on mac os and fedora linux using
 [visual studio code](https://code.visualstudio.com/), with latest
 [node.js LTS version](https://nodejs.org), [gradle 5.0](https://gradle.org/) and
-[java SDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+[java SDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
+
+The [lombok plugin](https://projectlombok.org/setup/gradle) configure in build.gradle allows project augmentation, but
+if you go use is with visual studio code or any other ide, the lombok agent must be configured. the plugin to do it
+automatically is available on
+[visual studio code extensions marketplace](https://marketplace.visualstudio.com/items?itemName=GabrielBB.vscode-lombok).
