@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.math.BigDecimal;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,7 +142,7 @@ public class ServicesTestSuite {
 	@Test
 	public void shouldGetMaryScore() {
 		HighScore h = highScores.find(2);
-		Long expected = 10l;
+		BigDecimal expected = new BigDecimal(10);
 		assertEquals(expected, h.getPoints());
 	}
 

@@ -21,17 +21,18 @@
             @click="continueGame"
           >Continue</v-btn>
           <v-btn
-            v-if="game.status.gameStatusId==1 && myGame"
+            v-if="game.status.gameStatusId==1 && myGame && iamPlayer2"
             color="warning"
             flat
             @click="refuseGame"
           >Refuse</v-btn>
           <v-btn
-            v-if="game.status.gameStatusId==1 && myGame"
+            v-if="game.status.gameStatusId==1 && myGame && iamPlayer2"
             color="primary"
             flat
             @click="acceptGame"
           >Accept</v-btn>
+          <div v-if="game.status.gameStatusId==1 && myGame && !iamPlayer2">waiting opponent response</div>
         </v-layout>
       </v-container>
     </v-card-actions>
@@ -59,6 +60,12 @@ export default {
         this.game &&
         (this.game.player1.playerId == this.$store.state.player.playerId ||
           this.game.player2.playerId == this.$store.state.player.playerId)
+      );
+    },
+    iamPlayer2() {
+      return (
+        this.game &&
+        this.game.player2.playerId == this.$store.state.player.playerId
       );
     }
   },

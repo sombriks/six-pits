@@ -83,12 +83,48 @@ public class Game {
   private Integer gameBigPitPlayer1;
   @Column(name = "game_big_pit_player2")
   private Integer gameBigPitPlayer2;
-  
+
   @PrePersist
   public void preInsert() {
+
     if (gameCreation == null)
-    gameCreation = new Date();
+      gameCreation = new Date();
+
     if (status == null)
       status = new GameStatus(1);
+
+    if (gameTurn == null)
+      gameTurn = 1;
+
+    if (gamePit1Player1 == null)
+      gamePit1Player1 = 6;
+    if (gamePit2Player1 == null)
+      gamePit2Player1 = 6;
+    if (gamePit3Player1 == null)
+      gamePit3Player1 = 6;
+    if (gamePit4Player1 == null)
+      gamePit4Player1 = 6;
+    if (gamePit5Player1 == null)
+      gamePit5Player1 = 6;
+    if (gamePit6Player1 == null)
+      gamePit6Player1 = 6;
+    if (gamePit1Player2 == null)
+      gamePit1Player2 = 6;
+    if (gamePit2Player2 == null)
+      gamePit2Player2 = 6;
+    if (gamePit3Player2 == null)
+      gamePit3Player2 = 6;
+    if (gamePit4Player2 == null)
+      gamePit4Player2 = 6;
+    if (gamePit5Player2 == null)
+      gamePit5Player2 = 6;
+    if (gamePit6Player2 == null)
+      gamePit6Player2 = 6;
+
+    if (gameBigPitPlayer1 == null)
+      gameBigPitPlayer1 = 0;
+
+    if (gameBigPitPlayer2 == null)
+      gameBigPitPlayer2 = 0;
   }
 }

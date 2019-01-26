@@ -1,5 +1,7 @@
 package six.pits.game.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +25,6 @@ public class HighScore {
   private Long games;
 
   @Column
-  private Long points;
+  private BigDecimal points;
 
 }

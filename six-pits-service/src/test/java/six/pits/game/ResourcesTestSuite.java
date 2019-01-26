@@ -105,13 +105,19 @@ public class ResourcesTestSuite {
 
   @Test
   public void shouldListScoresByGame() {
-    List<?> result = template.getForObject(url("/score/by-game-id/1"), List.class);
+    List<?> result = template.getForObject(url("/score/by-game-id?gameId=1"), List.class);
     assertEquals(3, result.size());
   }
 
   @Test
   public void shouldListJoeScores() {
-    List<?> result = template.getForObject(url("/score/by-player-id/1"), List.class);
+    List<?> result = template.getForObject(url("/score/by-player-id?playerId=1"), List.class);
+    assertEquals(1, result.size());
+  }
+
+  @Test
+  public void shouldListJoeScoresOnGame1() {
+    List<?> result = template.getForObject(url("/score/by-player-and-game?playerId=1&gameId=1"), List.class);
     assertEquals(1, result.size());
   }
 

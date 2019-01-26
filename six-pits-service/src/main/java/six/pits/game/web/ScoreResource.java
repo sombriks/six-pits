@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,21 +22,21 @@ public class ScoreResource extends BaseResource<Score, Integer> {
     this.scores = scores;
   }
 
-  @GetMapping("by-player-id/{id}")
-  public List<Score> byPlayerId(@PathVariable(name = "id", required = true) Integer id,
+  @GetMapping("by-player-id")
+  public List<Score> byPlayerId(@RequestParam(name = "playerId", required = true) Integer playerId,
       @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer pageSize) {
-    return scores.listByPlayerId(id, page, pageSize);
+    return scores.listByPlayerId(playerId, page, pageSize);
   }
 
-  @GetMapping("by-game-id/{id}")
-  public List<Score> byGameId(@PathVariable(name = "id", required = true) Integer id,
+  @GetMapping("by-game-id")
+  public List<Score> byGameId(@RequestParam(name = "gameId", required = true) Integer gameId,
       @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer pageSize) {
-    return scores.listByGameId(id, page, pageSize);
+    return scores.listByGameId(gameId, page, pageSize);
   }
 
-  @GetMapping("by-player-and-game/{playerId}/{gameId}")
-  public List<Score> byPlayerAndGame(@PathVariable(name = "playerId", required = true) Integer playerId,
-      @PathVariable(name = "gameId", required = true) Integer gameId, @RequestParam(defaultValue = "1") Integer page,
+  @GetMapping("by-player-and-game")
+  public List<Score> byPlayerAndGame(@RequestParam(name = "playerId", required = true) Integer playerId,
+      @RequestParam(name = "gameId", required = true) Integer gameId, @RequestParam(defaultValue = "1") Integer page,
       @RequestParam(defaultValue = "10") Integer pageSize) {
     return scores.listByPlayerIdAndGameId(playerId, gameId, page, pageSize);
   }
