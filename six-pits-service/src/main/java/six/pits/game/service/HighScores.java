@@ -21,7 +21,7 @@ public class HighScores {
   }
 
   public List<HighScore> list(int page, int pageSize) {
-    return em.createQuery("select h from HighScore h", HighScore.class)//
+    return em.createQuery("select h from HighScore h order by h.points desc", HighScore.class)//
         .setFirstResult((page - 1) * pageSize)//
         .setMaxResults(pageSize)//
         .getResultList();

@@ -96,8 +96,11 @@ const actions = {
     return api.get("/score/by-player-and-game", {params});
   },
   saveScore(_, score) {
-    return api.post("/score/save", score)
-  }
+    return api.post("/score/save", score);
+  },
+  listHighScores() {
+    return api.get("high-score/list?pageSize=50");
+  },
 };
 
 export const store = new Vuex.Store({state, mutations, actions});

@@ -136,17 +136,20 @@
         </v-container>
       </v-flex>
     </v-layout>
-    <v-layout column v-if="myTurn">
+    <v-layout column v-if="myTurn && gameNotEnded">
       <!-- game controls -->
       <!-- <v-slider v-model="sow"/> -->
       <input type="range" min="1" max="100" v-model="sow" style="width:100%;">
       <v-layout align-center justify-center>
         <v-btn color="primary" v-if="!ranging" @click="makeItSow">Rocks remaining: {{myStones}}</v-btn>
-        <v-btn color="warning" v-if="ranging" @click="stopIt">Stop!</v-btn>
+        <v-btn color="warning" v-if="ranging" @click="stopIt">Throw now!</v-btn>
       </v-layout>
     </v-layout>
-    <v-layout align-center justify-center v-if="!myTurn">
-      <h4>Waiting opponent's move</h4>
+    <v-layout align-center justify-center v-if="!myTurn && gameNotEnded">
+      <h4>Waiting opponent's move. come back later.</h4>
+    </v-layout>
+    <v-layout align-center justify-center v-if="gameEnded">
+      <h2>This game ended, {{game.status.gameStatusDescription}}</h2>
     </v-layout>
   </v-container>
 </template>
@@ -156,6 +159,14 @@ export default {
   name: "six-pits-board",
   props: ["game", "myTurn"],
   data: _ => ({ sow: 0, myStones: 0, ranging: false, interval: null }),
+  computed: {
+    gameEnded() {
+      return this.game && this.game.status.gameStatusId > 2;
+    },
+    gameNotEnded() {
+      return !this.gameEnded;
+    }
+  },
   methods: {
     whichPlayerIam() {
       if (this.$store.state.player.playerId == this.game.player1.playerId)
@@ -163,6 +174,7 @@ export default {
       else return 2;
     },
     pickRocks(pit, player) {
+      if (!this.myTurn) return alert("Not your turn yet.");
       if (this.whichPlayerIam() != player) return alert("Not your rocks :P");
       if (!this.game[`gamePit${pit}Player${player}`])
         return alert("This pit is empty!");
@@ -190,69 +202,48 @@ export default {
     },
     stopIt() {
       const player = this.whichPlayerIam();
-      const opponent = player == 2 ? 1 : 2;
-      this.ranging = false;
+      const remaining = this.remainingStones(player);
       clearInterval(this.interval);
+      this.ranging = false;
       // miss
       if (this.sow < 20) alert("Miss!");
       // first pit
-      else if (this.sow < 30) {
-        this.rockInPit(1);
-      }
+      else if (this.sow < 30) this.rockInPit(1, player);
       // second pit
-      else if (this.sow < 40) {
-        if (this.myStones) {
-          this.game[`gamePit2Player${player}`]++;
-          this.newScore(1);
-        }
-      }
+      else if (this.sow < 40) this.rockInPit(2, player);
       // third pit
-      else if (this.sow < 50) {
-        if (this.myStones) {
-          this.game[`gamePit3Player${player}`]++;
-          this.newScore(1);
-        }
-      }
+      else if (this.sow < 50) this.rockInPit(3, player);
       // fourth pit
-      else if (this.sow < 60) {
-        if (this.myStones) {
-          this.game[`gamePit4Player${player}`]++;
-          this.newScore(1);
-        }
-      }
+      else if (this.sow < 60) this.rockInPit(4, player);
       // fifth pit
-      else if (this.sow < 70) {
-        if (this.myStones) {
-          this.game[`gamePit5Player${player}`]++;
-          this.newScore(1);
-        }
-      }
+      else if (this.sow < 70) this.rockInPit(5, player);
       // sixth pit
-      else if (this.sow < 80) {
-        if (this.myStones) {
-          this.game[`gamePit6Player${player}`]++;
-          this.newScore(1);
-        }
-      }
+      else if (this.sow < 80) this.rockInPit(6, player);
       // the big pit
       else if (this.sow < 90) {
         this.game[`gameBigPitPlayer${player}`]++;
+        this.newScore(1);
         if (this.myStones) {
           alert("You hit your big pit!");
         } else {
-          alert("You hit your last stone in the big pit! keep your turn!");
-          this.sow = 0;
-          return;
+          if (remaining) {
+            alert("You hit your last stone in the big pit! keep your turn!");
+            this.$store.dispatch("updateGame", this.game);
+            this.sow = 0;
+            return;
+          } else this.endGame(player);
         }
-        this.newScore(1);
       }
       // miss again
       else alert("Miss!");
       this.sow = 0;
       if (!this.myStones) {
-        alert("You're out of stones. Your turn ended.");
-        this.endTurn();
+        if (remaining) {
+          alert("You're out of stones. Your turn ended.");
+          this.endTurn();
+        } else this.endGame(player);
       }
+      this.$store.dispatch("updateGame", this.game);
     },
     newScore(scorePoints) {
       const { playerId } = this.$store.state.player;
@@ -264,7 +255,8 @@ export default {
       });
       this.$emit("newScore");
     },
-    rockInPit(pit) {
+    rockInPit(pit, player) {
+      const opponent = player == 2 ? 1 : 2;
       if (this.myStones) {
         this.newScore(1);
       } else {
@@ -273,16 +265,42 @@ export default {
           const captured = this.game[`gamePit${pit}Player${opponent}`];
           this.game[`gamePit${pit}Player${opponent}`] = 0;
           this.game[`gamePit${pit}Player${player}`] += captured;
-          alert("Your last rock captured " + captured + " rocks");
-          this.newScore(captured);
+          alert("Your last rock captured " + captured + " rock(s)");
+          this.newScore(captured + 1);
         }
       }
       this.game[`gamePit${pit}Player${player}`]++;
     },
+    remainingStones(player) {
+      let remaining = 0;
+      [1, 2, 3, 4, 5, 6].map(pit => {
+        remaining += this.game[`gamePit${pit}Player${player}`];
+      });
+      return remaining;
+    },
     endTurn() {
       this.game.gameTurn++;
-      this.$store.dispatch("updateGame", this.game);
       this.$emit("endTurn");
+    },
+    endGame(player) {
+      alert("The game is over!");
+      const opponent = player == 2 ? 1 : 2;
+      let total1 = this.remainingStones(player);
+      total1 += this.game[`gameBigPitPlayer${player}`];
+      let total2 = this.remainingStones(opponent);
+      total2 += this.game[`gameBigPitPlayer${opponent}`];
+      if (total1 > total2) {
+        alert("you win!!!");
+        this.game.status.gameStatusId = player == 1 ? 3 : 4;
+      } else if (total1 < total2) {
+        this.game.status.gameStatusId = player == 1 ? 4 : 3;
+        alert("You Lose.");
+      } else {
+        alert("It's a draw!");
+        this.game.status.gameStatusId = 7;
+      }
+      this.$store.dispatch("updateGame", this.game);
+      this.$router.push("/lobby");
     }
   }
 };
