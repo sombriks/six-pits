@@ -1,13 +1,13 @@
 # About the tech stack
 
 The repo containing this solution is divided in two projects. The _monorepo_ approach is adopted here because it usually
-means that both projects are compatible in the same repo version. Also it is easier to set up.
+means that both projects are compatible in the same repo version. Also it is easier to set up. 
 
 The web project is written in modern javascript and relies on [npm](https://www.npmjs.com/) to manage the dependencies
-and build steps.
+and build steps. See The dedicated [README](../six-pits-web) for more details.
 
 The service project is written in modern java and relies on [gradle](https://gradle.org/) to manage dependencies and
-build.
+build. See The dedicated [README](../six-pits-service) for more details. 
 
 This solution was mainly developed on mac os and fedora linux using
 [visual studio code](https://code.visualstudio.com/), with latest

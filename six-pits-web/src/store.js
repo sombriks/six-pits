@@ -9,6 +9,7 @@ const env = process.env.NODE_ENV || "development";
 const baseURL = {
   development: "http://127.0.0.1:8080",
   // production:"-TBD-"
+  production: "http://127.0.0.1:8080",
 };
 
 const api = axios.create({
@@ -69,7 +70,7 @@ const actions = {
     return api.put("/player/save", player);
   },
   async listGames({commit}) {
-    const ret = await api.get("/game/list");
+    const ret = await api.get("/game/list?pageSize=50");
     commit("setGames", ret.data);
   },
   newGame(_, game) {
