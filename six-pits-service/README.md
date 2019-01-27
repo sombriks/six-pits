@@ -37,7 +37,7 @@ isn't clear as desired.
 ## Directions planned but not implemented
 
 - Reverse communication with web client using websockets or something else
-- Heroku hosting publishing or any other PaaS 
+- Heroku hosting publishing or any other PaaS
 - [Production profile](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html)
   to be enabled by environment variable or command line argument
 - Checkstyle to create a common idiom to be respected by a future team
