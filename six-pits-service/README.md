@@ -23,7 +23,7 @@ reports will be in `build/reports` folder.
 ## Issues
 
 The **@PrePersist** annotation was adopted to avoid some unwanted default behavior from JPA. The model is intentionally
-thing and holds as minimum knowledge about the database schema as possible. It is however a full featured ORM so one or
+thin and holds as minimum knowledge about the database schema as possible. It is however a full featured ORM so one or
 two adjustments were made.
 
 Some artifacts where excluded from **jacoco's coverage reports** because they where worthless to cover (get/set calls for
